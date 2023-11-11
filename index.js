@@ -2,6 +2,12 @@ const user_avatar = ["url(src/users1.jpg)", "url(src/users2.jpg)", "url(src/user
 const user1_avatar_node = document.getElementsByClassName("user1");
 const user2_avatar_node = document.getElementsByClassName("user2");
 
+const data = {
+  "COD Warzone": ["Dr Team", "Mia Plays", "Keoxer", "Nickmerc"],
+  "Fortnite": ["Headhunters", "Phoenix", "Gangsters", "Trollers"],
+  "Miencraft": ["BlockBuster", "Karmaland", "Block Lords","Dr Gold"]
+}
+
 for(let i = 0; i < user1_avatar_node.length; i++){
     user1_avatar_node[i].style.setProperty("background-image", user_avatar[parseInt(Math.random()*4)]);
     console.log(user1_avatar_node[i]);
@@ -73,10 +79,10 @@ if (localStorage.getItem("theme") == "light") {
   for (let i = 0; i < card_grid.length; i++) {
     card_grid[i].style.setProperty("border", "solid darkgray 1px");
   }
-
-  document
-    .getElementsByClassName("arrow")[1]
-    .style.setProperty("filter", "invert(1)");
+  const arrow = document.getElementsByClassName("arrow");
+  for(let i = 0; i < arrow.length; i++){
+    arrow[i].style.setProperty("filter", "invert(1)");
+  }
 }
 
 function changeTheme() {
