@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+*{
+    box-sizing: border-box;
+}
+#game-selector-result ol{
+    counter-reset: list-marker;
+} 
+
+#game-selector-result ol li::before{
+    content: counter(list-marker);
+    counter-increment: list-marker;
+}
