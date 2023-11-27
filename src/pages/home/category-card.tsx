@@ -14,7 +14,7 @@ function CatergoryCard(props: { data: CatergoryCardProps }) {
   return (
     <div
       className={
-        "p-[2vw] rounded-[10px] h-[11vw] relative group cursor-pointer flex items-baseline justify-between sm:block" +
+        " rounded-[10px] relative group cursor-pointer grid grid-cols-3 items-baseline justify-between p-[6.36vw] sm:block sm:p-[2vw]" +
         (theme === "dark"
           ? " bg-[#242831] "
           : " bg-white border-[1px] border-solid border-[darkgray]")
@@ -35,17 +35,17 @@ function CatergoryCard(props: { data: CatergoryCardProps }) {
       ></div>
 
       <span
-        className={`absolute left-[7%] top-[16%] z-[1] text-sm`}
+        className={`absolute left-[5%] top-[30%] sm:left-[3%] md:left-[7%] sm:top-[16%] z-[1]`}
         style={{ color: `${props.data.color}` }}
       >
         /
       </span>
-      <span className="text-[#5c6167] relative z-10 text-sm">{props.data.index}</span>
-      <h3 className="text-sm my-[0.8vw] relative font-bold p-0 z-[1]">
+      <span className="text-[#5c6167] relative z-10 w-[20vw]">{props.data.index}</span>
+      <h3 className="my-[0.8vw] w-[30vw] relative font-bold p-0 z-[1]">
         {props.data.title}
       </h3>
       <img
-        className={"relative z-10 text-sm" + (theme != "dark" ? " invert" : "")}
+        className={"relative z-10 ml-auto sm:ml-0" + (theme != "dark" ? " invert" : "")}
         src="src/assets/arrow.png"
         alt="->"
       />

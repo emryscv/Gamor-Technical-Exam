@@ -3,8 +3,8 @@ import CatergoryCard from "./category-card";
 function CategoriesSection() {
   return (
     <section>
-      <h2 className="font-bold text-[1.5vw] my-[1vw]">Trending Categories</h2>
-      <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[1vw]">
+      <h2 className="font-bold text-[4.77vw] my-[3.18vw] sm:text-[1.5vw] sm:my-[1vw]">Trending Categories</h2>
+      <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[3.18vw] sm:gap-[1vw] mb-[6.8%]">
         <CatergoryCard
           data={{ index: "01", color: "#5f2812", title: "Action Games" }}
         ></CatergoryCard>
