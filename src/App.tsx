@@ -2,30 +2,36 @@ import Home from "./pages/home/home";
 import Login from "./pages/login/login";
 import SignUp from "./pages/sign-up/sign-up";
 import { Theme } from "./context/ThemeProvider";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./error-page";
+import { useTwitchAuth } from "./hooks/useTwitchAuth";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
-    errorElement: <ErrorPage />
+    errorElement: <ErrorPage />,
   },
   {
     path: "login",
     element: <Login />,
-    errorElement: <ErrorPage />
+    errorElement: <ErrorPage />,
   },
   {
     path: "sign-up",
     element: <SignUp />,
-    errorElement: <ErrorPage />
-  }
+    errorElement: <ErrorPage />,
+  },
 ]);
 
 function App() {
   const { theme } = useContext(Theme);
+  const { authWithTwitch } = useTwitchAuth();
+
+  useEffect(() => {
+    authWithTwitch();
+  });
 
   return (
     <div

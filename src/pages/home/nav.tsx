@@ -2,41 +2,10 @@ import { useContext } from "react";
 import { Theme } from "../../context/ThemeProvider";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { NavListItem } from "../../components/nav-list-item";
 import { useMediaQuery } from "react-responsive";
-
-type ListItemProps = {
-  title: string;
-  active?: boolean;
-};
-
-function ListItem(props: { data: ListItemProps }) {
-  const { theme } = useContext(Theme);
-
-  return (
-    <li
-      className={
-        "text-sm sm:text-[1.1vw] m-[6vw] sm:m-0 sm:mr-[8%]" +
-        (props.data.active
-          ? (theme == "dark"
-              ? " text-[#fa874f] border-[#fa874f]"
-              : " text-[#7e23eb] border-[#7e23eb]") +
-            " text-center broder-solid border-[1px] p-[1vw] rounded-[50%]"
-          : " text-[#5c6167]")
-      }
-    >
-      <a
-        href="#"
-        className={
-          theme == "dark"
-            ? "hover:text-[white]"
-            : "hover:text-black hover:font-bold"
-        }
-      >
-        {props.data.title}
-      </a>
-    </li>
-  );
-}
+import user_plus_solid from "../../assets/images/user-plus-solid.svg";
+import selector from "../../assets/images/ajustes-deslizadores.png";
 
 function Nav() {
   const { theme } = useContext(Theme);
@@ -44,7 +13,7 @@ function Nav() {
   const [displayLogin, setDisplayLogin] = useState(false);
 
   const matches = useMediaQuery({ query: "(min-width: 640px)" });
-
+  
   //setDisplayNav(true);
 
   useEffect(() => {
@@ -52,7 +21,7 @@ function Nav() {
       setDisplayNav(true);
       setDisplayLogin(true);
     }
-  });
+  }, []);
 
   return (
     <nav className="mt-[6.8%] flex justify-between items-baseline mb-[6%]">
@@ -68,7 +37,7 @@ function Nav() {
       </div>
 
       <img
-        src="src/assets/ajustes-deslizadores.png"
+        src={selector}
         className={
           "h-[4vw] w-[4vw] sm:hidden block order-1 cursor-pointer" +
           (theme === "dark"
@@ -99,15 +68,15 @@ function Nav() {
         >
           x
         </span>
-        <ListItem data={{ title: "Home", active: true }}></ListItem>
-        <ListItem data={{ title: "Streams" }}></ListItem>
-        <ListItem data={{ title: "Party" }}></ListItem>
-        <ListItem data={{ title: "Premium" }}></ListItem>
+        <NavListItem data={{ title: "Home", active: true }}></NavListItem>
+        <NavListItem data={{ title: "Streams" }}></NavListItem>
+        <NavListItem data={{ title: "Party" }}></NavListItem>
+        <NavListItem data={{ title: "Premium" }}></NavListItem>
       </ul>
 
       <img
         id="cf-icon"
-        src="src/assets/user-plus-solid.svg"
+        src={user_plus_solid}
         alt="add-user"
         height="20px"
         width="20px"

@@ -1,55 +1,66 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Theme } from "../../../context/ThemeProvider";
-import useMediaQuery from "react-responsive";
-
-interface CFBoxProps {
-  user?: boolean;
-  top: number;
-  left: number;
-  background: string;
-}
-
-function CFBox(props: {
-  props: CFBoxProps;
-  children: React.ReactNode | React.ReactNode[];
-}) {
-  const { theme } = useContext(Theme);
-  const matches = useMediaQuery({ query: '(min-width: 640px)' })
-
-  if (!props.props.user) {
-    return (
-      <div
-        className={
-          `absolute h-[15.9vw] w-[15.9vw] rounded-[3.18vw] sm:h-[5vw] sm:w-[5vw] sm:rounded-[1vw] bg-bottom bg-[length:80%] bg-no-repeat hover:opacity-80 cursor-pointer` +
-          (theme == "dark" ? " bg-[#e57237]" : " bg-[#6921bc]")
-        }
-        style={{
-          top: matches ? `${Math.random() * 80 + 100}vw` : `${Math.random() * 22 + 15}vw`,
-          left: matches ? `${Math.random() * 80 + 100}vw` : `${Math.random() * 22 + 3}vw`,
-          backgroundImage: props.props.background,
-        }}
-      >
-        {props.children}
-      </div>
-    );
-  } else {
-    return null;
-  }
-}
+import ojo from "../../../assets/images/ojo.png";
+import center_frame_orange from "../../../assets/images/center-frame-orange.png";
+import center_frame_violet from "../../../assets/images/center-frame-violet.png";
+import user_plus_solid from "../../../assets/images/user-plus-solid.svg";
+import cf_box1_image from "../../../assets/images/cf-box1-image.png";
+import cf_box2_image from "../../../assets/images/cf-box2-image.png";
+import user from "../../../assets/images/user.png";
+import { CFBox } from "../../../components/cf-box";
+import { getStreams } from "../../../services/twitch/getStreams";
+import { getGame } from "../../../services/twitch/getGame";
+import { Game, Stream } from "../../../components/game-selector";
 
 function CenterFrame() {
   const { theme } = useContext(Theme);
+  const [game, setGame] = useState<Game>({
+    name: "",
+    id: "0",
+    image: "",
+  });
+  const [stream, setStream] = useState<Stream>({
+    title: "",
+    id: "",
+    user_id: "",
+    thumbnail_url: "",
+    viewer_count: 0,
+    started_at: "",
+  });
+  
+  useEffect(() => {
+    getStreamsFromTwitch(game.id);
+  }, []);
+
+  useEffect(() => {
+    getGameFromTwitch("Fornite");
+  }, []);
+
+  async function getGameFromTwitch(name: string) {
+    const response = await getGame(name);
+    setGame(response.data);
+  }
+
+  async function getStreamsFromTwitch(id: string) {
+    const response = await getStreams(id, 1);
+
+    console.log(response.data);
+
+    setStream(response.data[0]);
+  }
 
   return (
     <div
       id="center-frame"
       className={
         "w-[100%] sm:w-[33.3%] bg-bottom bg-[length:100%] bg-no-repeat relative text-center pt-[2%] h-[146vw] sm:h-auto" +
-        (theme == "dark"
-          ? " bg-[#fa874f] bg-[url('assets/center-frame-orange.png')]"
-          : " bg-[#7e23eb] bg-[url('assets/center-frame-violet.png')]")
+        (theme == "dark" ? ` bg-[#fa874f]` : ` bg-[#7e23eb]`)
       }
     >
+      <img
+        src={theme == "dark" ? center_frame_orange : center_frame_violet}
+        className="absolute bottom-0"
+      />
       <h2 className="text-[5.1vw] mt:[9.5%] mb-[3.18%] sm:text-[1.6vw] sm:mt-[3%] sm:mb-[1%] font-bold">
         Fortnite New Season
       </h2>
@@ -75,38 +86,34 @@ function CenterFrame() {
         >
           <img
             id="cf-icon"
-            src="src/assets/user-plus-solid.svg"
+            src={user_plus_solid}
             alt="add-user"
             height="20px"
             width="20px"
             className="h-[9.54vw] w-[4.77vw] sm:h-[3vw] sm:w-[1.5vw] ml-[10%] self-center"
           />
         </span>
-        11&nbsp;:&nbsp;45
+        {stream.started_at.substring(11, 16) || "00:00"}
       </div>
 
       <CFBox
         props={{
-          top: theme == "black" ? 25 : 20,
-          left: theme == "black" ? 2 : 3,
-          background: "url(src/assets/cf-box1-image.png)",
+          background: cf_box1_image,
         }}
       >
         <span
           id="cf-box1-icon"
-          className="rounded-full block h-[2vw] w-[2vw] bg-[#282420e6] absolute top-[-0.5vw] left-[-0.5vw]"
+          className="rounded-full block h-[6.36vw] w-[6.36vw] sm:h-[2vw] sm:w-[2vw] bg-[#282420e6] absolute top-[-1.59vw] left-[-1.59vw] sm:top-[-0.5vw] sm:left-[-0.5vw]"
         >
           <img
-            src="src/assets/ojo.png"
-            className="h-[1.2vw] w-[1.2vw] m-auto mt-[0.37vw] invert"
+            src={ojo}
+            className="h-[3.81vw] w-[3.81vw] sm:h-[1.2vw] sm:w-[1.2vw] m-auto mt-[1.17vw] sm:mt-[0.37vw] invert"
           />
         </span>
       </CFBox>
       <CFBox
         props={{
-          top: theme == "black" ? 20 : 26,
-          left: 20,
-          background: "url(src/assets/cf-box2-image.png)",
+          background: cf_box2_image,
         }}
       >
         <></>
@@ -114,9 +121,7 @@ function CenterFrame() {
       <CFBox
         props={{
           user: true,
-          top: theme == "black" ? 15 : 16,
-          left: theme == "black" ? 3 : 16,
-          background: "url(src/assets/user.png)",
+          background: user,
         }}
       >
         <></>

@@ -1,4 +1,4 @@
-import CatergoryCard from "./category-card";
+import CatergoryCard from "../../components/category-card";
 
 function CategoriesSection() {
   return (
